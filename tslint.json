@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "only-arrow-functions": false,
+    "object-literal-sort-keys": false
+  }
+}
