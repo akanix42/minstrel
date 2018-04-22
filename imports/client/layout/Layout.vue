@@ -1,53 +1,68 @@
 <template>
-  <div>
-    <div>
-      <button @click="playAudio">Play Audio</button>
-      <audio 
-        :src="directUrl"
-        controls/>
-    </div>
-    <div>
-      <button @click="playAudioStream">Play Audio</button>
-      <audio
-        :src="streamUrl"
-        controls/>
-    </div>
-  </div>
+  <QLayout view="lHh Lpr lFf">
+
+    <QLayoutDrawer
+      v-model="leftDrawerOpen"
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+    >
+      <QList
+        no-border
+        link
+        inset-delimiter
+      >
+        <QListHeader>Essential Links</QListHeader>
+        <QItem @click.native="openURL('http://quasar-framework.org')">
+          <QItemSide icon="school" />
+          <QItemMain
+            label="Docs"
+            sublabel="quasar-framework.org" />
+        </QItem>
+        <QItem @click.native="openURL('https://github.com/quasarframework/')">
+          <QItemSide icon="code" />
+          <QItemMain
+            label="GitHub"
+            sublabel="github.com/quasarframework" />
+        </QItem>
+        <QItem @click.native="openURL('https://discord.gg/5TDhbDg')">
+          <QItemSide icon="chat" />
+          <QItemMain
+            label="Discord Chat Channel"
+            sublabel="https://discord.gg/5TDhbDg" />
+        </QItem>
+        <QItem @click.native="openURL('http://forum.quasar-framework.org')">
+          <QItemSide icon="record_voice_over" />
+          <QItemMain
+            label="Forum"
+            sublabel="forum.quasar-framework.org" />
+        </QItem>
+        <QItem @click.native="openURL('https://twitter.com/quasarframework')">
+          <QItemSide icon="rss feed" />
+          <QItemMain
+            label="Twitter"
+            sublabel="@quasarframework" />
+        </QItem>
+      </QList>
+    </QLayoutDrawer>
+
+    <QPageContainer>
+      <router-view />
+    </QPageContainer>
+  </QLayout>
 </template>
 
 <script>
-import { Meteor } from 'meteor/meteor';
-import { Howl } from 'howler';
-const directUrl = Meteor.absoluteUrl('/I know a song.m4a');
-let streamUrl = Meteor.absoluteUrl(
-  // '/audio-stream?filename=I know a song.m4a&contentType=m4a',
-  '/audio-stream?filename=09 Life With You.flac&contentType=flac',
-);
-streamUrl =
-  'http://192.168.0.55:3046/audio-stream?filename=09 Life With You.flac&contentType=flac';
+import LayoutHeader from './LayoutHeader';
+
 export default {
+  components: {
+    LayoutHeader,
+  },
   data() {
     return {
-      directUrl,
-      streamUrl,
+      leftDrawerOpen: true,
     };
   },
-  methods: {
-    playAudio() {
-      const sound = new Howl({
-        src: directUrl,
-        html5: true,
-      });
-      sound.play();
-    },
-    playAudioStream() {
-      const sound = new Howl({
-        src: streamUrl,
-        html5: true,
-      });
-      sound.play();
-    },
-  },
+  methods: {},
 };
 </script>
 
